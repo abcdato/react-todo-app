@@ -1,3 +1,4 @@
+import React from 'react';
 import './NewTaskForm.css';
 
 export const NewTaskForm = () => {

@@ -1,5 +1,4 @@
 import { TasksFilter } from '../TaskFilter/TasksFilter';
-
 import './Footer.css';
 
 export const Footer = () => {

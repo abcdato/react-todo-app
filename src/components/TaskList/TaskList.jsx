@@ -1,12 +1,25 @@
-import Task from '../Task/Task';
+import { Task } from '../Task/Task';
 
 import './TaskList.css';
 
-export const TaskList = ({ todos, onDeleted }) => {
+export const TaskList = ({
+  todos,
+  onDeleted,
+  onToggleDone,
+  onToggleEditing,
+}) => {
   const tasks = todos.map((item) => {
     const { id, ...itemProps } = item;
 
-    return <Task key={id} {...itemProps} onDeleted={() => onDeleted(id)} />;
+    return (
+      <Task
+        key={id}
+        {...itemProps}
+        onDeleted={() => onDeleted(id)}
+        onToggleDone={() => onToggleDone(id)}
+        onToggleEditing={() => onToggleEditing(id)}
+      />
+    );
   });
 
   return (

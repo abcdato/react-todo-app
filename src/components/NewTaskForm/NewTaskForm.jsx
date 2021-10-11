@@ -7,16 +7,6 @@ export default class NewTaskForm extends Component {
     label: '',
   };
 
-  debounce = (fn, debounceTime) => {
-    let timeout;
-    return function (...args) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        fn.apply(this, args);
-      }, debounceTime);
-    };
-  };
-
   onChange = (e) => {
     this.setState({
       label: e.target.value,
@@ -43,9 +33,8 @@ export default class NewTaskForm extends Component {
         <input
           className="new-todo"
           placeholder="What needs to be done?"
-          onChange={this.onChange}
           value={this.state.label}
-          autoFocus
+          onChange={this.onChange}
         ></input>
       </form>
     );

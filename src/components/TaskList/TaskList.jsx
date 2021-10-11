@@ -1,10 +1,11 @@
-import { Task } from '../Task/Task';
+import Task from '../Task/Task';
 
 import './TaskList.css';
 
 export const TaskList = ({
   todos,
-  onDeleted,
+  handleDelete,
+  handleEdit,
   onToggleDone,
   onToggleEditing,
 }) => {
@@ -14,8 +15,10 @@ export const TaskList = ({
     return (
       <Task
         key={id}
+        id={id}
         {...itemProps}
-        onDeleted={() => onDeleted(id)}
+        handleDelete={() => handleDelete(id)}
+        handleEdit={handleEdit}
         onToggleDone={() => onToggleDone(id)}
         onToggleEditing={() => onToggleEditing(id)}
       />

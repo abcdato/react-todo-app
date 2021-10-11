@@ -2,24 +2,26 @@ import React, { Component } from 'react';
 import NewTaskForm from '../NewTaskForm/NewTaskForm';
 import { TaskList } from '../TaskList/TaskList';
 import { Footer } from '../Footer/Footer';
-
+import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 
 export default class App extends Component {
   state = {
     todoData: [
-      this.createTask('Completed task'),
-      this.createTask('Editing task'),
-      this.createTask('Active task'),
+      this.createTask('First task'),
+      this.createTask('Second task'),
+      this.createTask('Third task'),
     ],
+    filter: 'all',
   };
 
   createTask(label) {
     return {
       label,
-      important: false,
       done: false,
-      id: Math.floor(Math.random() * (1000 - 1 + 1)) + 1,
+      editing: false,
+      creationDate: new Date(),
+      id: uuidv4(),
     };
   }
 
@@ -38,13 +40,37 @@ export default class App extends Component {
     });
   };
 
+  addEditedItem = (id, updateItem) => {
+    this.setState(({ todoData }) => {
+      const newArr = [...todoData];
+      const ind = newArr.findIndex((el) => el.id === id);
+      newArr[ind] = updateItem;
+      return {
+        todoData: newArr,
+      };
+    });
+  };
+
   handleAdd = (label) => {
     const newTask = this.createTask(label);
 
     this.setState(({ todoData }) => {
-      const newArr = [...todoData, newTask];
       return {
-        todoData: newArr,
+        todoData: [...todoData, newTask],
+      };
+    });
+  };
+
+  handleEdit = (id, text) => {
+    this.setState(({ todoData }) => {
+      const newTodos = [...todoData].map((todo) => {
+        if (todo.id === id) {
+          todo.label = text;
+        }
+        return todo;
+      });
+      return {
+        todoData: newTodos,
       };
     });
   };
@@ -65,10 +91,38 @@ export default class App extends Component {
     });
   };
 
+  onFilterChange = (filter) => {
+    this.setState({ filter });
+  };
+
+  clearCompleted = () => {
+    this.setState(({ todoData }) => {
+      const completedTasks = todoData.filter((todo) => !todo.done);
+
+      return {
+        todoData: completedTasks,
+      };
+    });
+  };
+
+  filterTasks(todos, filter) {
+    switch (filter) {
+      case 'all':
+        return todos;
+      case 'active':
+        return todos.filter((todo) => !todo.done);
+      case 'completed':
+        return todos.filter((todo) => todo.done);
+      default:
+        return todos;
+    }
+  }
+
   render() {
-    const { todoData } = this.state;
+    const { todoData, filter } = this.state;
     const itemsDone = todoData.filter((todo) => todo.done).length;
     const itemsLeft = todoData.length - itemsDone;
+    const filteredTasks = this.filterTasks(todoData, filter);
 
     return (
       <section className="todoapp">
@@ -77,12 +131,19 @@ export default class App extends Component {
           <NewTaskForm handleAdd={this.handleAdd} />
         </header>
         <TaskList
-          todos={this.state.todoData}
-          onDeleted={this.handleDelete}
+          todos={filteredTasks}
+          handleDelete={this.handleDelete}
+          handleEdit={this.handleEdit}
+          addEditedItem={this.addEditedItem}
           onToggleDone={this.onToggleDone}
           onToggleEditing={this.onToggleEditing}
         />
-        <Footer itemsLeft={itemsLeft} />
+        <Footer
+          itemsLeft={itemsLeft}
+          clearCompleted={this.clearCompleted}
+          filter={filter}
+          onFilterChange={this.onFilterChange}
+        />
       </section>
     );
   }

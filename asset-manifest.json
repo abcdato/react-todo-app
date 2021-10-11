@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/cuddly-engine/static/css/main.96b064f0.chunk.css",
-    "main.js": "/cuddly-engine/static/js/main.4d0e8069.chunk.js",
-    "main.js.map": "/cuddly-engine/static/js/main.4d0e8069.chunk.js.map",
+    "main.js": "/cuddly-engine/static/js/main.33e33d71.chunk.js",
+    "main.js.map": "/cuddly-engine/static/js/main.33e33d71.chunk.js.map",
     "runtime-main.js": "/cuddly-engine/static/js/runtime-main.8b3f589d.js",
     "runtime-main.js.map": "/cuddly-engine/static/js/runtime-main.8b3f589d.js.map",
-    "static/js/2.2850b52c.chunk.js": "/cuddly-engine/static/js/2.2850b52c.chunk.js",
-    "static/js/2.2850b52c.chunk.js.map": "/cuddly-engine/static/js/2.2850b52c.chunk.js.map",
+    "static/js/2.2afbbccb.chunk.js": "/cuddly-engine/static/js/2.2afbbccb.chunk.js",
+    "static/js/2.2afbbccb.chunk.js.map": "/cuddly-engine/static/js/2.2afbbccb.chunk.js.map",
     "index.html": "/cuddly-engine/index.html",
     "static/css/main.96b064f0.chunk.css.map": "/cuddly-engine/static/css/main.96b064f0.chunk.css.map",
-    "static/js/2.2850b52c.chunk.js.LICENSE.txt": "/cuddly-engine/static/js/2.2850b52c.chunk.js.LICENSE.txt"
+    "static/js/2.2afbbccb.chunk.js.LICENSE.txt": "/cuddly-engine/static/js/2.2afbbccb.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8b3f589d.js",
-    "static/js/2.2850b52c.chunk.js",
+    "static/js/2.2afbbccb.chunk.js",
     "static/css/main.96b064f0.chunk.css",
-    "static/js/main.4d0e8069.chunk.js"
+    "static/js/main.33e33d71.chunk.js"
   ]
 }

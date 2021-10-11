@@ -22,6 +22,7 @@ export default class Task extends Component {
       this.props.handleDelete();
       return;
     }
+
     this.props.handleEdit(this.props.id, this.state.label);
     this.props.onToggleEditing(this.props.id);
   };
@@ -65,7 +66,6 @@ export default class Task extends Component {
             className="edit"
             value={this.state.label}
             onChange={this.onChange}
-            // onBlur={this.onSubmit}
           />
         </form>
       </li>

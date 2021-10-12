@@ -3,6 +3,7 @@ import NewTaskForm from '../NewTaskForm/NewTaskForm';
 import { TaskList } from '../TaskList/TaskList';
 import { Footer } from '../Footer/Footer';
 import { v4 as uuidv4 } from 'uuid';
+
 import './App.css';
 
 export default class App extends Component {

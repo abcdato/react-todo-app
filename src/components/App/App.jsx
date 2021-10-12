@@ -17,7 +17,7 @@ export default class App extends Component {
       label,
       done: false,
       editing: false,
-      creationDate: Date.now(),
+      creationDate: String(Date.now()),
       id: uuidv4(),
     };
   };

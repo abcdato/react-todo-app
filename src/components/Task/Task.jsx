@@ -9,7 +9,7 @@ export default class Task extends Component {
     label: 'Default task',
     done: false,
     editing: false,
-    creationDate: String(Date.now()),
+    creationDate: String(new Date()),
   };
 
   static propTypes = {

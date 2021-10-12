@@ -12,7 +12,6 @@ export const Footer = ({
   return (
     <footer className="footer">
       <span className="todo-count">{itemsLeft} items left</span>
-
       <TasksFilter filter={filter} onFilterChange={onFilterChange} />
       <button className="clear-completed" onClick={clearCompleted}>
         Clear completed

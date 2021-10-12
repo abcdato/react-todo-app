@@ -16,7 +16,7 @@ export default class Task extends Component {
     label: PropTypes.string,
     done: PropTypes.bool,
     editing: PropTypes.bool,
-    creationDate: PropTypes.instanceOf(Date),
+    creationDate: PropTypes.string,
     handleDelete: PropTypes.func.isRequired,
     onToggleDone: PropTypes.func.isRequired,
     onToggleEditing: PropTypes.func.isRequired,
@@ -55,7 +55,7 @@ export default class Task extends Component {
       creationDate,
     } = this.props;
 
-    const timeCreated = formatDistanceToNow(creationDate, {
+    const timeCreated = formatDistanceToNow(new Date(creationDate), {
       includeSeconds: true,
     });
 

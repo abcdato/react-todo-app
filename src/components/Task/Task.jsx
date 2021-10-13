@@ -1,11 +1,12 @@
-import { formatDistanceToNow } from 'date-fns';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { formatDistanceToNow } from 'date-fns';
 
 import './Task.css';
 
 export default class Task extends Component {
   static defaultProps = {
+    id: '',
     label: 'Default task',
     done: false,
     editing: false,
@@ -13,77 +14,77 @@ export default class Task extends Component {
   };
 
   static propTypes = {
+    id: PropTypes.string,
     label: PropTypes.string,
     done: PropTypes.bool,
     editing: PropTypes.bool,
     creationDate: PropTypes.string,
+    handleEdit: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired,
     onToggleDone: PropTypes.func.isRequired,
     onToggleEditing: PropTypes.func.isRequired,
   };
 
-  state = {
-    label: this.props.label,
-  };
+  constructor(props) {
+    super(props);
+    const { label } = this.props;
 
-  onChange = (e) => {
+    this.state = {
+      inputValue: label,
+    };
+  }
+
+  onChange = (event) => {
     this.setState({
-      label: e.target.value,
+      inputValue: event.target.value,
     });
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
+  onSubmit = (event) => {
+    event.preventDefault();
 
-    if (this.state.label.trim() === '') {
-      this.props.handleDelete();
+    const { inputValue } = this.state;
+    const { id, handleEdit, handleDelete, onToggleEditing } = this.props;
+
+    if (inputValue.trim() === '') {
+      handleDelete();
       return;
     }
-
-    this.props.handleEdit(this.props.id, this.state.label);
-    this.props.onToggleEditing(this.props.id);
+    handleEdit(id, inputValue);
+    onToggleEditing(id);
   };
 
   render() {
-    const {
-      label,
-      handleDelete,
-      onToggleDone,
-      onToggleEditing,
-      done,
-      editing,
-      creationDate,
-    } = this.props;
+    const { label, handleDelete, onToggleDone, onToggleEditing, done, editing, creationDate } = this.props;
+    const { inputValue } = this.state;
 
     const timeCreated = formatDistanceToNow(new Date(creationDate), {
       includeSeconds: true,
     });
 
-    const className = done ? 'completed' : editing ? 'editing' : 'active';
+    let className;
+
+    if (done) {
+      className = 'completed';
+    } else if (editing) {
+      className = 'editing';
+    } else {
+      className = 'active';
+    }
 
     return (
       <li className={className}>
         <div className="view">
-          <input
-            className="toggle"
-            type="checkbox"
-            checked={done}
-            onChange={onToggleDone}
-          />
+          <input className="toggle" type="checkbox" checked={done} onChange={onToggleDone} />
           <label>
             <span className="description">{label}</span>
             <span className="created">created {timeCreated} ago</span>
           </label>
-          <button className="icon icon-edit" onClick={onToggleEditing}></button>
-          <button className="icon icon-destroy" onClick={handleDelete}></button>
+          <button className="icon icon-edit" onClick={onToggleEditing} type="button" aria-label="edit" />
+          <button className="icon icon-destroy" onClick={handleDelete} type="button" aria-label="delete" />
         </div>
         <form onSubmit={this.onSubmit}>
-          <input
-            type="text"
-            className="edit"
-            value={this.state.label}
-            onChange={this.onChange}
-          />
+          <input type="text" className="edit" value={inputValue} onChange={this.onChange} />
         </form>
       </li>
     );

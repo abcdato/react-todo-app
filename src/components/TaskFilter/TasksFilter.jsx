@@ -1,8 +1,9 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import './TaskFilter.css';
 
-export const TasksFilter = ({ filter, onFilterChange }) => {
+const TasksFilter = ({ filter, onFilterChange }) => {
   const buttons = [
     { name: 'all', label: 'All' },
     { name: 'active', label: 'Active' },
@@ -15,7 +16,7 @@ export const TasksFilter = ({ filter, onFilterChange }) => {
 
     return (
       <li key={name}>
-        <button className={className} onClick={() => onFilterChange(name)}>
+        <button className={className} onClick={() => onFilterChange(name)} type="button">
           {label}
         </button>
       </li>
@@ -33,3 +34,5 @@ TasksFilter.propTypes = {
   filter: PropTypes.string,
   onFilterChange: PropTypes.func.isRequired,
 };
+
+export default TasksFilter;

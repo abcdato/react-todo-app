@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistanceToNow } from 'date-fns';
-
-import './Task.css';
+import Timer from '../Timer/Timer';
 
 export default class Task extends Component {
   static defaultProps = {
@@ -11,6 +10,8 @@ export default class Task extends Component {
     done: false,
     editing: false,
     creationDate: String(new Date()),
+    minutes: '0',
+    seconds: '0',
   };
 
   static propTypes = {
@@ -23,6 +24,8 @@ export default class Task extends Component {
     handleDelete: PropTypes.func.isRequired,
     onToggleDone: PropTypes.func.isRequired,
     onToggleEditing: PropTypes.func.isRequired,
+    minutes: PropTypes.string,
+    seconds: PropTypes.string,
   };
 
   constructor(props) {
@@ -55,7 +58,8 @@ export default class Task extends Component {
   };
 
   render() {
-    const { label, handleDelete, onToggleDone, onToggleEditing, done, editing, creationDate } = this.props;
+    const { label, handleDelete, onToggleDone, onToggleEditing, done, editing, creationDate, minutes, seconds } =
+      this.props;
     const { inputValue } = this.state;
 
     const timeCreated = formatDistanceToNow(new Date(creationDate), {
@@ -77,8 +81,9 @@ export default class Task extends Component {
         <div className="view">
           <input className="toggle" type="checkbox" checked={done} onChange={onToggleDone} />
           <label>
-            <span className="description">{label}</span>
-            <span className="created">created {timeCreated} ago</span>
+            <span className="title">{label}</span>
+            <Timer minutes={minutes} seconds={seconds} />
+            <span className="description">created {timeCreated} ago</span>
           </label>
           <button className="icon icon-edit" onClick={onToggleEditing} type="button" aria-label="edit" />
           <button className="icon icon-destroy" onClick={handleDelete} type="button" aria-label="delete" />

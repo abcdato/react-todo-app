@@ -55,6 +55,8 @@ export default class Task extends Component {
   };
 
   render() {
+    console.log('render');
+
     const { label, handleDelete, onToggleDone, onToggleEditing, done, editing, creationDate } = this.props;
     const { inputValue } = this.state;
 

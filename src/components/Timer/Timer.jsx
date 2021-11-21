@@ -44,7 +44,6 @@ export default class Timer extends Component {
         isTimeSaved: true,
       });
     }
-
     saveTimeToLocalStorage(id, minutes, seconds);
   };
 

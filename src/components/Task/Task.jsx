@@ -29,6 +29,7 @@ export default class Task extends Component {
 
   constructor(props) {
     super(props);
+
     const { label } = this.props;
 
     this.state = {

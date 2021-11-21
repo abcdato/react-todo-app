@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 
 export default class Timer extends Component {
   static defaultProps = {
+    id: '0',
     isPlaying: false,
-    minutes: '0',
-    seconds: '0',
   };
 
   static propTypes = {
+    id: PropTypes.string,
     isPlaying: PropTypes.bool,
-    minutes: PropTypes.string,
-    seconds: PropTypes.string,
+    minutes: PropTypes.string.isRequired,
+    seconds: PropTypes.string.isRequired,
+    saveTimeToLocalStorage: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -20,6 +21,7 @@ export default class Timer extends Component {
     const { isPlaying, minutes, seconds } = this.props;
 
     this.state = {
+      isTimeSaved: false,
       isPlaying,
       minutes,
       seconds,
@@ -31,11 +33,19 @@ export default class Timer extends Component {
   }
 
   handlePause = () => {
+    const { minutes, seconds, isTimeSaved } = this.state;
+    const { id, saveTimeToLocalStorage } = this.props;
+
     clearInterval(this.timerId);
 
-    this.setState({
-      isPlaying: false,
-    });
+    if (!isTimeSaved) {
+      this.setState({
+        isPlaying: false,
+        isTimeSaved: true,
+      });
+    }
+
+    saveTimeToLocalStorage(id, minutes, seconds);
   };
 
   handlePlay = () => {
@@ -44,6 +54,7 @@ export default class Timer extends Component {
     if (!isPlaying) {
       this.setState({
         isPlaying: true,
+        isTimeSaved: false,
       });
       this.timerId = setInterval(this.updateTimer, 1000);
     }
@@ -62,7 +73,7 @@ export default class Timer extends Component {
       min += 1;
     }
 
-    this.setState({ minutes: min, seconds: sec });
+    this.setState({ minutes: String(min), seconds: String(sec) });
   };
 
   render() {

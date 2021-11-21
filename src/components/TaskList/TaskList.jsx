@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Task from '../Task/Task';
 
-const TaskList = ({ todos, handleDelete, handleEdit, onToggleDone, onToggleEditing }) => {
+const TaskList = ({ todos, handleDelete, handleEdit, onToggleDone, onToggleEditing, saveTimeToLocalStorage }) => {
   const tasks = todos.map((item) => {
     const { id, ...itemProps } = item;
 
@@ -15,6 +15,7 @@ const TaskList = ({ todos, handleDelete, handleEdit, onToggleDone, onToggleEditi
         handleEdit={handleEdit}
         onToggleDone={() => onToggleDone(id)}
         onToggleEditing={() => onToggleEditing(id)}
+        saveTimeToLocalStorage={saveTimeToLocalStorage}
       />
     );
   });
@@ -31,6 +32,7 @@ TaskList.defaultProps = {
   handleEdit: () => {},
   onToggleDone: () => {},
   onToggleEditing: () => {},
+  saveTimeToLocalStorage: () => {},
 };
 
 TaskList.propTypes = {
@@ -39,6 +41,7 @@ TaskList.propTypes = {
   handleEdit: PropTypes.func,
   onToggleDone: PropTypes.func,
   onToggleEditing: PropTypes.func,
+  saveTimeToLocalStorage: PropTypes.func,
 };
 
 export default TaskList;

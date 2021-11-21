@@ -10,8 +10,6 @@ export default class Task extends Component {
     done: false,
     editing: false,
     creationDate: String(new Date()),
-    minutes: '0',
-    seconds: '0',
   };
 
   static propTypes = {
@@ -24,8 +22,9 @@ export default class Task extends Component {
     handleDelete: PropTypes.func.isRequired,
     onToggleDone: PropTypes.func.isRequired,
     onToggleEditing: PropTypes.func.isRequired,
-    minutes: PropTypes.string,
-    seconds: PropTypes.string,
+    minutes: PropTypes.string.isRequired,
+    seconds: PropTypes.string.isRequired,
+    saveTimeToLocalStorage: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -58,8 +57,19 @@ export default class Task extends Component {
   };
 
   render() {
-    const { label, handleDelete, onToggleDone, onToggleEditing, done, editing, creationDate, minutes, seconds } =
-      this.props;
+    const {
+      id,
+      label,
+      handleDelete,
+      onToggleDone,
+      onToggleEditing,
+      done,
+      editing,
+      creationDate,
+      minutes,
+      seconds,
+      saveTimeToLocalStorage,
+    } = this.props;
     const { inputValue } = this.state;
 
     const timeCreated = formatDistanceToNow(new Date(creationDate), {
@@ -82,7 +92,7 @@ export default class Task extends Component {
           <input className="toggle" type="checkbox" checked={done} onChange={onToggleDone} />
           <label>
             <span className="title">{label}</span>
-            <Timer minutes={minutes} seconds={seconds} />
+            <Timer id={id} minutes={minutes} seconds={seconds} saveTimeToLocalStorage={saveTimeToLocalStorage} />
             <span className="description">created {timeCreated} ago</span>
           </label>
           <button className="icon icon-edit" onClick={onToggleEditing} type="button" aria-label="edit" />

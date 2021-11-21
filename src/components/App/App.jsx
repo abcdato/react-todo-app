@@ -48,6 +48,14 @@ export default class App extends Component {
       return el;
     });
 
+  updateTime = (arr, id, minutes, seconds) =>
+    arr.map((el) => {
+      if (el.id === id) {
+        return { ...el, minutes, seconds };
+      }
+      return el;
+    });
+
   handleDelete = (id) => {
     this.setState(({ todoData }) => ({
       todoData: todoData.filter((todo) => todo.id !== id),
@@ -106,6 +114,12 @@ export default class App extends Component {
     });
   };
 
+  saveTimeToLocalStorage = (id, minutes, seconds) => {
+    this.setState(({ todoData }) => ({
+      todoData: this.updateTime(todoData, id, minutes, seconds),
+    }));
+  };
+
   filterTasks = (todos, filter) => {
     switch (filter) {
       case 'all':
@@ -138,6 +152,7 @@ export default class App extends Component {
           handleEdit={this.handleEdit}
           onToggleDone={this.onToggleDone}
           onToggleEditing={this.onToggleEditing}
+          saveTimeToLocalStorage={this.saveTimeToLocalStorage}
         />
         <Footer
           itemsLeft={itemsLeft}

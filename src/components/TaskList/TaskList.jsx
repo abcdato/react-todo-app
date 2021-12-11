@@ -1,5 +1,4 @@
-import Task from '../Task/Task';
-
+import { Task } from '../Task/Task';
 import './TaskList.css';
 
 export const TaskList = ({
@@ -23,7 +22,6 @@ export const TaskList = ({
         onToggleEditing={() => onToggleEditing(id)}
       />
     );
-  });
 
   return (
     <section className="main">

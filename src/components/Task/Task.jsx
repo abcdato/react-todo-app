@@ -1,6 +1,5 @@
-import { formatDistanceToNow } from 'date-fns';
-
 import './Task.css';
+import { formatDistanceToNow } from 'date-fns';
 
 import { Component } from 'react';
 
@@ -40,8 +39,8 @@ export default class Task extends Component {
     const timeCreated = formatDistanceToNow(creationDate, {
       includeSeconds: true,
     });
-
-    const className = done ? 'completed' : editing ? 'editing' : 'active';
+    
+  let style = active ? 'active' : 'completed';
 
     return (
       <li className={className}>
@@ -70,5 +69,3 @@ export default class Task extends Component {
         </form>
       </li>
     );
-  }
-}

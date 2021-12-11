@@ -19,7 +19,6 @@ const TaskList = ({ todos, handleDelete, handleEdit, onToggleDone, onToggleEditi
         onToggleEditing={() => onToggleEditing(id)}
       />
     );
-  });
 
   return (
     <section className="main">

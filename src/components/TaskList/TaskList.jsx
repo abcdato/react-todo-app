@@ -1,15 +1,10 @@
-import Task from '../Task/Task';
+import React from 'react';
 import PropTypes from 'prop-types';
+import Task from '../Task/Task';
 
 import './TaskList.css';
 
-export const TaskList = ({
-  todos,
-  handleDelete,
-  handleEdit,
-  onToggleDone,
-  onToggleEditing,
-}) => {
+const TaskList = ({ todos, handleDelete, handleEdit, onToggleDone, onToggleEditing }) => {
   const tasks = todos.map((item) => {
     const { id, ...itemProps } = item;
 
@@ -46,3 +41,5 @@ TaskList.propTypes = {
   onToggleDone: PropTypes.func,
   onToggleEditing: PropTypes.func,
 };
+
+export default TaskList;

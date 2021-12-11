@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import NewTaskForm from '../NewTaskForm/NewTaskForm';
-import { TaskList } from '../TaskList/TaskList';
-import { Footer } from '../Footer/Footer';
 import { v4 as uuidv4 } from 'uuid';
+
+import NewTaskForm from '../NewTaskForm/NewTaskForm';
+import TaskList from '../TaskList/TaskList';
+import Footer from '../Footer/Footer';
 
 import './App.css';
 
@@ -12,48 +13,42 @@ export default class App extends Component {
     filter: JSON.parse(localStorage.getItem('filter')) || 'all',
   };
 
-  createTask = (label) => {
-    return {
-      label,
-      done: false,
-      editing: false,
-      creationDate: String(new Date()),
-      id: uuidv4(),
-    };
-  };
+  createTask = (label) => ({
+    label,
+    done: false,
+    editing: false,
+    creationDate: String(new Date()),
+    id: uuidv4(),
+  });
 
-  toggleProp = (arr, id, propName) => {
-    return arr.map((el) => {
+  toggleProp = (arr, id, propName) =>
+    arr.map((el) => {
       if (el.id === id) {
         return { ...el, [propName]: !el[propName] };
       }
       return el;
     });
-  };
 
   handleDelete = (id) => {
-    this.setState(({ todoData }) => {
-      return {
-        todoData: todoData.filter((todo) => todo.id !== id),
-      };
-    });
+    this.setState(({ todoData }) => ({
+      todoData: todoData.filter((todo) => todo.id !== id),
+    }));
   };
 
   handleAdd = (label) => {
     const newTask = this.createTask(label);
 
-    this.setState(({ todoData }) => {
-      return {
-        todoData: [...todoData, newTask],
-      };
-    });
+    this.setState(({ todoData }) => ({
+      todoData: [...todoData, newTask],
+    }));
   };
 
   handleEdit = (id, text) => {
     this.setState(({ todoData }) => {
       const newTodos = [...todoData].map((todo) => {
         if (todo.id === id) {
-          todo.label = text;
+          const item = todo;
+          item.label = text;
         }
         return todo;
       });
@@ -64,19 +59,15 @@ export default class App extends Component {
   };
 
   onToggleDone = (id) => {
-    this.setState(({ todoData }) => {
-      return {
-        todoData: this.toggleProp(todoData, id, 'done'),
-      };
-    });
+    this.setState(({ todoData }) => ({
+      todoData: this.toggleProp(todoData, id, 'done'),
+    }));
   };
 
   onToggleEditing = (id) => {
-    this.setState(({ todoData }) => {
-      return {
-        todoData: this.toggleProp(todoData, id, 'editing'),
-      };
-    });
+    this.setState(({ todoData }) => ({
+      todoData: this.toggleProp(todoData, id, 'editing'),
+    }));
   };
 
   onFilterChange = (filter) => {

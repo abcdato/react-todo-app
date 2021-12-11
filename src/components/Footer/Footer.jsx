@@ -13,6 +13,7 @@ const Footer = ({ itemsLeft, clearCompleted, filter, onFilterChange }) => (
   </footer>
 );
 
+
 Footer.defaultProps = {
   itemsLeft: 3,
   filter: 'all',

@@ -18,7 +18,6 @@ const TaskList = ({ todos, handleDelete, handleEdit, onToggleDone, onToggleEditi
         saveTimeToLocalStorage={saveTimeToLocalStorage}
       />
     );
-  });
 
   return (
     <section className="main">

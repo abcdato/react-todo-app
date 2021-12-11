@@ -24,7 +24,6 @@ export const TaskList = ({
         onToggleEditing={() => onToggleEditing(id)}
       />
     );
-  });
 
   return (
     <section className="main">

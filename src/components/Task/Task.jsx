@@ -2,8 +2,6 @@ import { formatDistanceToNow } from 'date-fns';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import './Task.css';
-
 export default class Task extends Component {
   static defaultProps = {
     label: 'Default task',
@@ -58,8 +56,8 @@ export default class Task extends Component {
     const timeCreated = formatDistanceToNow(new Date(creationDate), {
       includeSeconds: true,
     });
-
-    const className = done ? 'completed' : editing ? 'editing' : 'active';
+    
+  let style = active ? 'active' : 'completed';
 
     return (
       <li className={className}>
@@ -87,5 +85,3 @@ export default class Task extends Component {
         </form>
       </li>
     );
-  }
-}

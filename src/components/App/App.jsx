@@ -5,16 +5,35 @@ import NewTaskForm from '../NewTaskForm/NewTaskForm';
 import TaskList from '../TaskList/TaskList';
 import Footer from '../Footer/Footer';
 
-import './App.css';
+import '../../index.css';
 
 export default class App extends Component {
   state = {
-    todoData: JSON.parse(localStorage.getItem('todoData')) || [],
-    filter: JSON.parse(localStorage.getItem('filter')) || 'all',
+    todoData: [],
+    filter: 'all',
   };
 
-  createTask = (label) => ({
+  componentDidMount() {
+    const todoData = JSON.parse(localStorage.getItem('todoData')) || [];
+    const filter = JSON.parse(localStorage.getItem('filter')) || 'all';
+
+    this.setState({
+      todoData,
+      filter,
+    });
+  }
+
+  componentDidUpdate() {
+    const { todoData, filter } = this.state;
+
+    localStorage.setItem('todoData', JSON.stringify(todoData));
+    localStorage.setItem('filter', JSON.stringify(filter));
+  }
+
+  createTask = (label, minutes, seconds) => ({
     label,
+    minutes,
+    seconds,
     done: false,
     editing: false,
     creationDate: String(new Date()),
@@ -29,14 +48,25 @@ export default class App extends Component {
       return el;
     });
 
+  updateTime = (arr, id, minutes, seconds) =>
+    arr.map((el) => {
+      if (el.id === id) {
+        return { ...el, minutes, seconds };
+      }
+      return el;
+    });
+
   handleDelete = (id) => {
     this.setState(({ todoData }) => ({
       todoData: todoData.filter((todo) => todo.id !== id),
     }));
   };
 
-  handleAdd = (label) => {
-    const newTask = this.createTask(label);
+  handleAdd = (label, minutes, seconds) => {
+    const min = minutes || '0';
+    const sec = seconds || '0';
+
+    const newTask = this.createTask(label, min, sec);
 
     this.setState(({ todoData }) => ({
       todoData: [...todoData, newTask],
@@ -84,6 +114,12 @@ export default class App extends Component {
     });
   };
 
+  saveTimeToLocalStorage = (id, minutes, seconds) => {
+    this.setState(({ todoData }) => ({
+      todoData: this.updateTime(todoData, id, minutes, seconds),
+    }));
+  };
+
   filterTasks = (todos, filter) => {
     switch (filter) {
       case 'all':
@@ -104,9 +140,6 @@ export default class App extends Component {
     const itemsLeft = todoData.length - itemsDone;
     const filteredTasks = this.filterTasks(todoData, filter);
 
-    localStorage.setItem('todoData', JSON.stringify(todoData));
-    localStorage.setItem('filter', JSON.stringify(filter));
-
     return (
       <section className="todoapp">
         <header className="header">
@@ -119,6 +152,7 @@ export default class App extends Component {
           handleEdit={this.handleEdit}
           onToggleDone={this.onToggleDone}
           onToggleEditing={this.onToggleEditing}
+          saveTimeToLocalStorage={this.saveTimeToLocalStorage}
         />
         <Footer
           itemsLeft={itemsLeft}

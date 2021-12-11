@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './TaskFilter.css';
-
 const TasksFilter = ({ filter, onFilterChange }) => {
   const buttons = [
     { name: 'all', label: 'All' },

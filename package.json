@@ -60,13 +60,8 @@
     "lint-staged": "^11.2.3",
     "prettier": "^2.4.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "./src/{*.js, *.jsx}": [
+    "./src/*.jsx": [
       "npm run lint"
     ]
   }

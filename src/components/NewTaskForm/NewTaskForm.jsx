@@ -1,8 +1,13 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import './NewTaskForm.css';
 
 export default class NewTaskForm extends Component {
+  static propTypes = {
+    handleAdd: PropTypes.func.isRequired,
+  };
+
   state = {
     label: '',
   };
@@ -15,6 +20,7 @@ export default class NewTaskForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+
     if (this.state.label.trim() === '') {
       this.setState({
         label: '',

@@ -3,50 +3,38 @@ import NewTaskForm from '../NewTaskForm/NewTaskForm';
 import { TaskList } from '../TaskList/TaskList';
 import { Footer } from '../Footer/Footer';
 import { v4 as uuidv4 } from 'uuid';
+
 import './App.css';
 
 export default class App extends Component {
   state = {
-    todoData: [
-      this.createTask('First task'),
-      this.createTask('Second task'),
-      this.createTask('Third task'),
-    ],
-    filter: 'all',
+    todoData: JSON.parse(localStorage.getItem('todoData')) || [],
+    filter: JSON.parse(localStorage.getItem('filter')) || 'all',
   };
 
-  createTask(label) {
+  createTask = (label) => {
     return {
       label,
       done: false,
       editing: false,
-      creationDate: new Date(),
+      creationDate: String(new Date()),
       id: uuidv4(),
     };
-  }
+  };
 
-  toggleProp(arr, id, propName) {
-    const i = arr.findIndex((el) => el.id === id);
-    const oldItem = arr[i];
-    const newItem = { ...oldItem, [propName]: !oldItem[propName] };
-    return [...arr.slice(0, i), newItem, ...arr.slice(i + 1)];
-  }
+  toggleProp = (arr, id, propName) => {
+    return arr.map((el) => {
+      if (el.id === id) {
+        return { ...el, [propName]: !el[propName] };
+      }
+      return el;
+    });
+  };
 
   handleDelete = (id) => {
     this.setState(({ todoData }) => {
       return {
         todoData: todoData.filter((todo) => todo.id !== id),
-      };
-    });
-  };
-
-  addEditedItem = (id, updateItem) => {
-    this.setState(({ todoData }) => {
-      const newArr = [...todoData];
-      const ind = newArr.findIndex((el) => el.id === id);
-      newArr[ind] = updateItem;
-      return {
-        todoData: newArr,
       };
     });
   };
@@ -105,7 +93,7 @@ export default class App extends Component {
     });
   };
 
-  filterTasks(todos, filter) {
+  filterTasks = (todos, filter) => {
     switch (filter) {
       case 'all':
         return todos;
@@ -116,13 +104,17 @@ export default class App extends Component {
       default:
         return todos;
     }
-  }
+  };
 
   render() {
     const { todoData, filter } = this.state;
+
     const itemsDone = todoData.filter((todo) => todo.done).length;
     const itemsLeft = todoData.length - itemsDone;
     const filteredTasks = this.filterTasks(todoData, filter);
+
+    localStorage.setItem('todoData', JSON.stringify(todoData));
+    localStorage.setItem('filter', JSON.stringify(filter));
 
     return (
       <section className="todoapp">
@@ -134,7 +126,6 @@ export default class App extends Component {
           todos={filteredTasks}
           handleDelete={this.handleDelete}
           handleEdit={this.handleEdit}
-          addEditedItem={this.addEditedItem}
           onToggleDone={this.onToggleDone}
           onToggleEditing={this.onToggleEditing}
         />

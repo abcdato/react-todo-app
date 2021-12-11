@@ -1,9 +1,25 @@
-import './Task.css';
 import { formatDistanceToNow } from 'date-fns';
-
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Task extends Component {
+  static defaultProps = {
+    label: 'Default task',
+    done: false,
+    editing: false,
+    creationDate: String(new Date()),
+  };
+
+  static propTypes = {
+    label: PropTypes.string,
+    done: PropTypes.bool,
+    editing: PropTypes.bool,
+    creationDate: PropTypes.string,
+    handleDelete: PropTypes.func.isRequired,
+    onToggleDone: PropTypes.func.isRequired,
+    onToggleEditing: PropTypes.func.isRequired,
+  };
+
   state = {
     label: this.props.label,
   };
@@ -21,6 +37,7 @@ export default class Task extends Component {
       this.props.handleDelete();
       return;
     }
+
     this.props.handleEdit(this.props.id, this.state.label);
     this.props.onToggleEditing(this.props.id);
   };
@@ -36,7 +53,7 @@ export default class Task extends Component {
       creationDate,
     } = this.props;
 
-    const timeCreated = formatDistanceToNow(creationDate, {
+    const timeCreated = formatDistanceToNow(new Date(creationDate), {
       includeSeconds: true,
     });
     
@@ -64,7 +81,6 @@ export default class Task extends Component {
             className="edit"
             value={this.state.label}
             onChange={this.onChange}
-            // onBlur={this.onSubmit}
           />
         </form>
       </li>

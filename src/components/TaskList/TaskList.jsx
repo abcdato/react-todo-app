@@ -1,4 +1,6 @@
-import { Task } from '../Task/Task';
+import Task from '../Task/Task';
+import PropTypes from 'prop-types';
+
 import './TaskList.css';
 
 export const TaskList = ({
@@ -28,4 +30,19 @@ export const TaskList = ({
       <ul className="todo-list">{tasks}</ul>
     </section>
   );
+};
+
+TaskList.defaultProps = {
+  handleDelete: () => {},
+  handleEdit: () => {},
+  onToggleDone: () => {},
+  onToggleEditing: () => {},
+};
+
+TaskList.propTypes = {
+  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleDelete: PropTypes.func,
+  handleEdit: PropTypes.func,
+  onToggleDone: PropTypes.func,
+  onToggleEditing: PropTypes.func,
 };

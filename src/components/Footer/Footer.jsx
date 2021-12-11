@@ -1,5 +1,5 @@
 import { TasksFilter } from '../TaskFilter/TasksFilter';
-import './Footer.css';
+import PropTypes from 'prop-types';
 
 export const Footer = ({
   itemsLeft,
@@ -10,11 +10,24 @@ export const Footer = ({
   return (
     <footer className="footer">
       <span className="todo-count">{itemsLeft} items left</span>
-
       <TasksFilter filter={filter} onFilterChange={onFilterChange} />
       <button className="clear-completed" onClick={clearCompleted}>
         Clear completed
       </button>
     </footer>
   );
+};
+
+Footer.defaultProps = {
+  itemsLeft: 3,
+  filter: 'all',
+  clearCompleted: () => {},
+  onFilterChange: () => {},
+};
+
+Footer.propTypes = {
+  itemsLeft: PropTypes.number,
+  filter: PropTypes.string,
+  clearCompleted: PropTypes.func.isRequired,
+  onFilterChange: PropTypes.func,
 };

@@ -107,3 +107,5 @@ export default class Task extends Component {
         </form>
       </li>
     );
+    }
+  };

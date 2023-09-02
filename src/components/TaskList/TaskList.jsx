@@ -18,6 +18,7 @@ const TaskList = ({ todos, handleDelete, handleEdit, onToggleDone, onToggleEditi
         saveTimeToLocalStorage={saveTimeToLocalStorage}
       />
     );
+  });
 
   return (
     <section className="main">
@@ -35,6 +36,7 @@ TaskList.defaultProps = {
 };
 
 TaskList.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleDelete: PropTypes.func,
   handleEdit: PropTypes.func,

@@ -25,9 +25,9 @@
     "eject": "vite eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "lint": "eslint ./src --color",
-    "lint:fix": "eslint ./src --fix --color",
-    "format": "prettier --write ./src",
+    "lint": "eslint ./src/*.jsx --color",
+    "lint:fix": "eslint ./src/*.jsx  --fix --color",
+    "format": "prettier --write ./src/*.jsx ",
     "prepare": "husky install"
   },
   "eslintConfig": {
